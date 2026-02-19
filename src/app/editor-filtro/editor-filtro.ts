@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-editor-filtro',
@@ -7,26 +7,10 @@ import { Component, signal, computed } from '@angular/core';
   styleUrl: './editor-filtro.scss',
 })
 export class EditorFiltroComponent {
-  brillo = signal(100);
-  contraste = signal(100);
-  blur = signal(0);
-  blancoNegro = signal(false);
+  // Solo necesitamos saber si está activo o no
+  esBlancoNegro = signal(false);
 
-  filtroScss = computed(() => {
-    const base = `brightness(${this.brillo()}%) contrast(${this.contraste()}%) blur(${this.blur()}px)`;
-    const escala = this.blancoNegro() ? ' grayscale(100%)' : '';
-    return base + escala;
-  });
-
-  actualizar(prop: string, evento: Event) {
-    const valor = (evento.target as HTMLInputElement).value;
-    if (prop === 'brillo') this.brillo.set(+valor);
-    if (prop === 'contraste') this.contraste.set(+valor);
-    if (prop === 'blur') this.blur.set(+valor);
-  }
-
-  toggleBlancoNegro() {
-    this.blancoNegro.update(v => !v);
+  toggleFiltro() {
+    this.esBlancoNegro.update(estado => !estado);
   }
 }
-
